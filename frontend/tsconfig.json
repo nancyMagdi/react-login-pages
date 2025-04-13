@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "jsx": "react-jsx",
+      "strict": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      },
+      "types": ["vite/client"]
+    },
+    "include": ["src", "../my-auth-app/src/services", "../my-auth-app/src/App.tsx", "../my-auth-app/src/main.tsx", "../my-auth-app/src/pages", "../my-auth-app/src/providers", "../my-auth-app/src/routes", "../my-auth-app/src/auth"]
+  }

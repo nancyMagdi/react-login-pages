@@ -12,7 +12,7 @@ import { UsersModule } from "../users/users.module"; // Adjust the path as neces
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    PassportModule,
+    PassportModule.register({ defaultStrategy: "jwt" }),
     UsersModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

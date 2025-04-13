@@ -1,0 +1,46 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000/
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      target: builder
+      dockerfile: Dockerfile
+    command: npm run start:dev
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongodb:27017/auth-api
+      - JWT_SECRET=dev-secret-key
+      - FRONTEND_URL=http://localhost:5173
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:5.0
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=auth-api
+
+volumes:
+  mongodb-data:

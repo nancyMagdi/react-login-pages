@@ -7,14 +7,16 @@ import { ValidationPipe } from "@nestjs/common/pipes/validation.pipe";
 import { ValidationFilter } from "./common/filters/validation.filter";
 import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
 import { nestWinstonLogger } from "./common/logger/winston.logger";
+import { corsConfig } from "./config/cors.config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: nestWinstonLogger,
   });
+
   // Security middleware
   app.use(helmet());
-  app.enableCors();
+  app.enableCors(corsConfig);
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
@@ -40,5 +42,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);
+  await app.listen(3000);
+  console.log(`Application is running on: ${await app.getUrl()}`);
+
 }
 bootstrap();
