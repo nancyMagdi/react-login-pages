@@ -6,6 +6,7 @@ import {
   ForbiddenException,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
+import { Request } from "express";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -18,8 +19,13 @@ export class AuthGuard implements CanActivate {
       if (typeof authorization !== "string" || authorization.trim() === "") {
         throw new UnauthorizedException("Please provide token");
       }
-      const authToken: string = authorization.replace(/Bearer/gi, "").trim();
+      const authToken: string = authorization
+        .replace(/Bearer\s*/gi, "")
+        .replace(/^["']|["']$/g, "")
+        .trim();
       const resp = this.authService.validateToken(authToken);
+      console.log("auth guard - ", resp);
+      request.user = resp.id;
       return !!resp;
     } catch (error) {
       console.log("auth error - ", error.message);

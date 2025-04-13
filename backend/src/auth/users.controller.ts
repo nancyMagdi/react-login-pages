@@ -9,7 +9,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async getProfile(@GetUser("id") userId: string) {
+  async getProfile(@GetUser() userId: string) {
     const user = await this.usersService.findById(userId);
     if (!user) {
       throw new NotFoundException("User not found");
