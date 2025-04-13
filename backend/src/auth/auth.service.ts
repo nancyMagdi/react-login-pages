@@ -3,15 +3,17 @@ import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
-import { User } from "../users/schemas/user.schema";
+import { User } from "./schemas/user.schema";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
   async signUp(createUserDto: CreateUserDto): Promise<{ token: string }> {
@@ -48,5 +50,11 @@ export class AuthService {
     const token = this.jwtService.sign({ id: user._id });
 
     return { token };
+  }
+
+  validateToken(token: string): { id: string } {
+    return this.jwtService.verify<{ id: string }>(token, {
+      secret: this.configService.get<string>("JWT_SECRET"),
+    });
   }
 }

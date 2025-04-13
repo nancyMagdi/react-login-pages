@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        const storedUser = localStorage.getItem('user');
+        const storedUser = localStorage.getItem('token');
         if (storedUser) {
           const parsedUser = JSON.parse(storedUser) as User;
           // Add validation if needed
@@ -30,7 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       } catch (error) {
         console.error('Failed to parse user data', error);
-        localStorage.removeItem('user');
+        localStorage.removeItem('token');
       } finally {
         setLoading(false);
       }
@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       
       setUser(response.user);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      localStorage.setItem('token', response.user.token);
       return { success: true, user: response.user };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Login failed';
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       setUser(response.user);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      localStorage.setItem('token', JSON.stringify(response.user.token));
       return { success: true, user: response.user };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Registration failed';
@@ -81,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     navigate('/login');
   }, [navigate]);
 

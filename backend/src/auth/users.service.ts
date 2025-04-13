@@ -23,7 +23,7 @@ export class UsersService {
    * @param createUserDto User data
    * @returns Created user document
    */
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User > {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser = new this.userModel({
       ...createUserDto,
@@ -38,12 +38,8 @@ export class UsersService {
    * @returns User document if found
    * @throws NotFoundException if user not found
    */
-  async findById(id: string): Promise<User> {
-    const user = await this.userModel.findById(id).exec();
-    if (!user) {
-      throw new NotFoundException("User not found");
-    }
-    return user;
+  async findById(id: string): Promise<User | null> {
+    return await this.userModel.findById(id).exec();
   }
 
   /**
