@@ -40,3 +40,22 @@
 .read-the-docs {
   color: #888;
 }
+
+.gap-2 {
+  gap: .5rem !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+.flex {
+  display: flex !important
+}
+.py-4 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+.gap-3 {
+  gap: 1rem !important;
+}

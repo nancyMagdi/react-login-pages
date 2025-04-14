@@ -1,7 +1,7 @@
 import AppRouter from '@/routes/AppRouter';
 // import AppHeader from '@/components/layout/AppHeader';
 // import AppFooter from '@/components/layout/AppFooter';
-
+import  './App.css';
 export default function App() {
   return (
     <div className="flex flex-column min-h-screen">

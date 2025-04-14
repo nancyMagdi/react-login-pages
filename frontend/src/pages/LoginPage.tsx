@@ -1,17 +1,17 @@
-import { Card } from 'primereact/card';
-import { Button } from 'primereact/button';
-import LoginForm from '@/features/auth/components/LoginForm';
-import { LoginCredentials } from '@/features/auth/types/auth.types';
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
+import LoginForm from "@/features/auth/components/LoginForm";
+import { LoginCredentials } from "@/features/auth/types/auth.types";
 
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from "react-hook-form";
 
 export default function LoginPage() {
   // Initialize form methods
   const methods = useForm<LoginCredentials>({
     defaultValues: {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: "",
+    },
   });
 
   return (
@@ -21,13 +21,13 @@ export default function LoginPage() {
         <FormProvider {...methods}>
           <LoginForm />
         </FormProvider>
-        
+
         <div className="mt-3 text-center">
-          <span className="text-600">Don't have an account?</span>{' '}
-          <Button 
-            link 
-            label="Register" 
-            onClick={() => window.location.href = '/register'} 
+          <span className="text-600">Don't have an account?</span>{" "}
+          <Button styles={{ "vertical-align": "bottom" }} 
+            link
+            label="Register"
+            onClick={() => (window.location.href = "/register")}
           />
         </div>
       </Card>
